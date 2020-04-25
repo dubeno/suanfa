@@ -1,0 +1,47 @@
+一、Java 基本数据类型及对应的字节数
+    boolean-> 1 bit
+    byte   -> 8 bit
+    char   -> 2 byte
+    short  -> 2 byte
+    int    -> 4 byte
+    float  -> 4 byte
+    long   -> 8 byte
+    double -> 8 tybe
+
+二、String类能被继承吗，为什么？
+    不能被继承，String 是final类
+
+三、String，Stringbuffer，StringBuilder的区别？
+    String :      字符串不可变，线程安全，适合字符串初始化后不变的场景;
+    StringBuffer: 字符串可变，线程安全，适合多线程下，字符串频繁变化的场景;
+    StringBuilder:字符串可变，非线程安全，适合单线程下，字符串频繁变化的场景;
+
+四、ArrayList和LinkedList有什么区别？
+    ArrayList:数据结构基于动态数组实现，适合随机存取，不适合频繁插入，删除;
+    LinkedList:数据结构基于双向链表实现，适合频繁插入，删除，不适合随机存取;
+五、讲讲类的实例化顺序，比如父类静态数据，构造函数，字段，子类静态数据，构造函数，字段，当new的时候，他们的执行顺序?
+    1.静态项:(静态变量，静态代码块)
+        父类的静态变量或者静态代码块先执行->子类静态变量或者子类静态代码块(静态代码和静态代码块执行看代码中放置的顺序)
+    2. new
+    3.父类:
+        是父类成员变量初始化->父类构造函数
+    4.子类:
+        子类成员变量初始化->子类构造函数执行
+
+六、用过哪些Map类，都有什么区别，HashMap是线程安全的吗,并发下使用的Map是什么，他们内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。
+    1. HashMap,ConcurrentHashMap
+    2. HashMap 非线程安全(1.扩容导致死循环，2.迭代时fast-fail):推荐链接:http://www.jasongj.com/java/concurrenthashmap/
+    3. 并发情况下使用ConcurrentHashMap
+    4. HashMap 存储方式:JDK 1.7=>(数组+链表)，JDK 1.8=>(数据+链表+红黑树)
+    5. HashMap hashcode 优化:hashcode ^(hashcode>>>16)保证高十六位参与hashcode运算，减少hash冲突
+    6. HashMap 容量必须为2^x,寻址index是使用hashcode & (n-1) 和 hash % n 取模结构一致，但是位运算效率更高
+    7. HashMap JDK1.7 数组，默认长度16，扩容，当前数组长度达到n * capacity的时候，扩容至原来的两倍，扩容会发生数据迁移。
+    8. HashMap JDK1.8 数组，默认长度16，扩容，当前数组长度达到n * capacity的时候，扩容至原来的两倍或者当链表长度超过8，转红黑树时，如果数组长度小于64
+       此时会进行扩容。
+    9. HashMap JDK 1.7 插入是插入到链表的头结点，JDK 1.8 是插入到链表的尾节点
+
+
+
+
+
+
