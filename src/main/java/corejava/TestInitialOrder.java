@@ -1,5 +1,11 @@
 package corejava;
 
+/**
+ * First, parent static items, then child static items
+ * Then parent member variables, followed by the parent constructor
+ * Then child member variables, followed by the child constructor
+ * @author robin
+ */
 public class TestInitialOrder {
     public static void main(String[] args) {
         InitailOrder order = new SubClassInitialOrder();
