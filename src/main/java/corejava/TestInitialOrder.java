@@ -12,10 +12,10 @@ public class TestInitialOrder {
     }
 }
 class InitailOrder{
+    static String a = verify("静态变量初始化");
     static {
         System.out.println("静态代码块");
     }
-    static String a = verify("静态变量初始化");
     String nonStatic = verify("成员变量初始化");
     public InitailOrder() {
         System.out.println("构造函数");

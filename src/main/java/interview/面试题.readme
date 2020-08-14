@@ -7,6 +7,7 @@
     float  -> 4 byte
     long   -> 8 byte
     double -> 8 tybe
+    void
 
 二、String类能被继承吗，为什么？
     不能被继承，String 是final类
@@ -27,18 +28,27 @@
         是父类成员变量初始化->父类构造函数
     4.子类:
         子类成员变量初始化->子类构造函数执行
-
+    5:推荐链接:http://1001javatips.com/initializationorder.htm
 六、用过哪些Map类，都有什么区别，HashMap是线程安全的吗,并发下使用的Map是什么，他们内部原理分别是什么，比如存储方式，hashcode，扩容，默认容量等。
-    1. HashMap,ConcurrentHashMap
+    1. HashMap,ConcurrentHashMap，LinkedHashMap(输出序=输入序),TreeMap(自然序或自定义序列)
     2. HashMap 非线程安全(1.扩容导致死循环，2.迭代时fast-fail):推荐链接:http://www.jasongj.com/java/concurrenthashmap/
     3. 并发情况下使用ConcurrentHashMap
     4. HashMap 存储方式:JDK 1.7=>(数组+链表)，JDK 1.8=>(数据+链表+红黑树)
-    5. HashMap hashcode 优化:hashcode ^(hashcode>>>16)保证高十六位参与hashcode运算，减少hash冲突
+    5. HashMap hashcode 优化:(h = k.hashcode )^(hashcode>>>16)保证高十六位参与hashcode运算，减少hash冲突
     6. HashMap 容量必须为2^x,寻址index是使用hashcode & (n-1) 和 hash % n 取模结构一致，但是位运算效率更高
     7. HashMap JDK1.7 数组，默认长度16，扩容，当前数组长度达到n * capacity的时候，扩容至原来的两倍，扩容会发生数据迁移。
-    8. HashMap JDK1.8 数组，默认长度16，扩容，当前数组长度达到n * capacity的时候，扩容至原来的两倍或者当链表长度超过8，转红黑树时，如果数组长度小于64
+    8. HashMap JDK1.8 数组，默认长度16，扩容，当前数组长度达到n * capacity的2333时候，扩容至原来的两倍或者当链表长度超过8，转红黑树时，如果数组长度小于64
        此时会进行扩容。
-    9. HashMap JDK 1.7 插入是插入到链表的头结点，JDK 1.8 是插入到链表的尾节点
+    9. 扩容过程:创建新数组，容量为旧数组两倍，并重新计算旧数组中结点的在新数组中的存储位置(原位置或原位置+原数组长度)
+    9. HashMap hash碰撞时 JDK 1.7 插入是插入到链表的头结点，JDK 1.8 是插入到链表的尾节点
+    10.why红黑树不是二叉查找树:说红黑树的特征和二叉查找树的缺点，二叉查找数据极端情况下会变成线性链表，查找效率低，红黑树遍历效率高。
+    11.红黑树最大路径不会超过最短路径的两倍，是平衡的折中。
+    12.HashMap JDK1.8 不是链表结点数超过8就一定会转换成红黑树，而是要先保证数组的长度超过64，否则先进行数组扩容，因此JDK 1.8 扩容有两个触发点，一个是
+       数组长度超过阈值，另一个是树化，但是数组长度没有超过64;
+    13. ConsurrenHashMap JDK 1.7 实现: RentrantLock + Segment + HashEntry数组 + 链表 分段锁，一个Segment一把锁
+    14. ConsurrenHashMap JDK 1.8 实现: CAS +synchronized + Node数组 + 链表 + 红黑树） 降低了锁粒度，JVM支持的锁，节省内存
+七、 Java 8的ConcurrentHashMap为什么放弃了分段锁，有什么问题吗，如果你来设计，你如何设计?
+    yun降低了锁粒度，JVM支持的锁，节省内存
 
 
 
